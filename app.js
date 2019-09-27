@@ -72,6 +72,18 @@ app.get("/", function(req, res) {
 
 });
 
+// Creating custom lists using express route parameters
+
+app.get("/:customListName", function(req,res){
+  const customListName = (req.params.customListName);
+  const listSchema = {
+    name: String,
+    items: [itemsSchema]
+  };
+
+  const List = mongoose.model("List", listSchema);
+});
+
 app.post("/", function(req, res) {
 
   const itemName = req.body.newItem;
@@ -107,18 +119,17 @@ app.post("/delete", function(req,res){
   });
 });
 
-app.get("/work", function(req, res) {
-
-  res.render("list", {
-    listTitle: "Work List",
-    newListItems: workItems
-  });
-});
+// app.get("/work", function(req, res) {
+//
+//   res.render("list", {
+//     listTitle: "Work List",
+//     newListItems: workItems
+//   });
+// });
 
 app.get("/about", function(req, res) {
   res.render("about");
 });
-
 
 app.listen(3000, function() {
   console.log("server running on port 3000");
